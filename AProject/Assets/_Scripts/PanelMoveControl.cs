@@ -14,11 +14,14 @@
  */
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine;
 
 public class PanelMoveControl : MonoBehaviour {
-    public Animator Ani_AudioSettingPanel; 
+    public Animator Ani_AudioSettingPanel;
+    public Animator Ani_WaponPanel;
+    
+    public Animation Ani_Wapon;
 	// Use this for initialization
 	void Start () {
 		
@@ -35,5 +38,26 @@ public class PanelMoveControl : MonoBehaviour {
 
     public void HideAuidoSettingPanel() {
         Ani_AudioSettingPanel.SetBool("isDisPlayInfo", false);
+    }
+
+
+    public void DisplayWaponPanel() {
+        Ani_WaponPanel.SetBool("IsDisplay", true);
+        print(Ani_Wapon);
+        
+        Ani_Wapon.Play("Sm4_Forward");
+        Ani_Wapon.PlayQueued("Sm4_Big");
+
+
+
+
+
+
+    }
+
+    public void HideWaponPanel() {
+        Ani_WaponPanel.SetBool("IsDisplay", false);
+        Ani_Wapon.Play("Sm4_Small");
+        Ani_Wapon.PlayQueued("Sm4_Behind");
     }
 }

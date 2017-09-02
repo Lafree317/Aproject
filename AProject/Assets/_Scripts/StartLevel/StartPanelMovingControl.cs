@@ -34,7 +34,7 @@ public class StartPanelMovingControl : MonoBehaviour,IBeginDragHandler,IDragHand
     // Update is called once per frame
     void Update () {
         // 滑动脚本完善 添加边界
-        print(this.transform.localPosition.x);
+      
         
         if(this.transform.localPosition.x > 0  ) {
             this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, new Vector3(0, 0, 0), Time.deltaTime * _FloSmooth);

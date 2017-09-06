@@ -78,9 +78,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\_Scripts\AudioManager.cs" />
     <Compile Include="Assets\_Scripts\PanelMoveControl.cs" />
-    <Compile Include="Assets\_Scripts\StartLevel\StartPanelMovingControl.cs" />
+    <Compile Include="Assets\_Scripts\StartLevel\AudioManager.cs" />
+    <Compile Include="Assets\_Scripts\StartLevel\AudioPlayControl.cs" />
+    <Compile Include="Assets\_Scripts\StartLevel\SliderControl.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

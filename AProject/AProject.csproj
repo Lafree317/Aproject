@@ -81,6 +81,7 @@
     <Compile Include="Assets\_Scripts\PanelMoveControl.cs" />
     <Compile Include="Assets\_Scripts\StartLevel\AudioManager.cs" />
     <Compile Include="Assets\_Scripts\StartLevel\AudioPlayControl.cs" />
+    <Compile Include="Assets\_Scripts\StartLevel\GlobalManager.cs" />
     <Compile Include="Assets\_Scripts\StartLevel\SliderControl.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -24,9 +24,18 @@ public class AudioPlayControl : MonoBehaviour {
 		
 	}
 
-    
+    // 普通button音效播放
     public void PlayButtonEffect() {
         AudioManager.PlayEffect("AudioEffect_ConvertGUIPage");
+    }
+    // 背景音乐的音量处理
+    public void ChangeGameBackgroundVolume(float volume) {
+        AudioManager.ChangeBackgroundVolume(volume);
+    }
+
+    public void ChangeEffectVolume(float volume) {
+        AudioManager.ChangeEffectVolume(volume);
+
     }
 
     static public void StatucPlayButtonEffect() {// static 方法ui执行不了 回头研究

@@ -18,23 +18,23 @@ using UnityEngine;                                                              
 using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour {
-    public AudioClip[] AudioClipArray;                                                             // 音频文件数组
-    private static Dictionary<string, AudioClip> _Dic;                                             // 音频文件集合
-    private static AudioSource[] AudioSourceArray;
-    private static AudioSource _AudioSource_BackgroundMusic;                                       // 背景音乐音频源
-    private static AudioSource _AudioSource_AudioEffect;                                           // 音效音频源
-
+    public AudioClip[] audioClipArray;                                                             // 音频文件数组
+    private static Dictionary<string, AudioClip> dic;                                              // 音频文件集合
+    private static AudioSource[] audioSourceArray;
+    private static AudioSource audioSource_BackgroundMusic;                                        // 背景音乐音频源
+    private static AudioSource audioSource_AudioEffect;                                            // 音效音频源
+    
     private void Awake() {
         // 音频源集合类德加载处理
-        _Dic = new Dictionary<string, AudioClip>();
-        foreach (AudioClip audioClipItem in AudioClipArray) {
-            _Dic.Add(audioClipItem.name, audioClipItem);
+        dic = new Dictionary<string, AudioClip>();
+        foreach (AudioClip audioClipItem in audioClipArray) {
+            dic.Add(audioClipItem.name, audioClipItem);
         }
 
         // 得到AudioSource
-        AudioSourceArray = this.gameObject.GetComponents<AudioSource>();
-        _AudioSource_BackgroundMusic = AudioSourceArray[0];
-        _AudioSource_AudioEffect = AudioSourceArray[1];
+        audioSourceArray = this.gameObject.GetComponents<AudioSource>();
+        audioSource_BackgroundMusic = audioSourceArray[0];
+        audioSource_AudioEffect = audioSourceArray[1];
 
     }
 
@@ -46,18 +46,19 @@ public class AudioManager : MonoBehaviour {
 
     // 播放背景音乐
     public static void PlayBackground(AudioClip audioClip) {
+
+        // 得到GlobalManager 传过来的数值音量大小
+        audioSource_BackgroundMusic.volume = GlobalManager.backgroundAudioVolume;
+
         // 不能与当前正在播放的背景音乐重复
-        if (_AudioSource_BackgroundMusic.clip == audioClip) {
+        if (audioSource_BackgroundMusic.clip == audioClip) {
             return;
         }
 
-        // 得到GlobalManager 传过来的数值音量大小
-        _AudioSource_BackgroundMusic.volume = 1F;
-
         // 播放的
         if (audioClip) {
-            _AudioSource_BackgroundMusic.clip = audioClip;                                         // 注入音频文件
-            _AudioSource_BackgroundMusic.Play();
+            audioSource_BackgroundMusic.clip = audioClip; // 注入音频文件
+            audioSource_BackgroundMusic.Play();
         } else {
             Debug.LogError("[AudioMAnager.cs/PlayBackground()] audioClip is Null");
         }
@@ -66,7 +67,7 @@ public class AudioManager : MonoBehaviour {
     // 播放背景音乐
     public static void PlayBackground(string audioClipName) {
         if (!string.IsNullOrEmpty(audioClipName)) {
-            PlayBackground(_Dic[audioClipName]);
+            PlayBackground(dic[audioClipName]);
         } else {
             Debug.LogError("[AudioMAnager.cs/PlayBackground()] audioClipName is Null");
         }
@@ -76,12 +77,12 @@ public class AudioManager : MonoBehaviour {
     public static void PlayEffect(AudioClip audioClip) {
 
         // 得到GlobalManager 传过来的数值音量大小
-        _AudioSource_AudioEffect.volume = 1F;
+        audioSource_AudioEffect.volume = GlobalManager.effectAudioVolume;
 
         // 播放的
         if (audioClip) {
-            _AudioSource_AudioEffect.clip = audioClip;                                             // 注入音频文件
-            _AudioSource_AudioEffect.Play();
+            audioSource_AudioEffect.clip = audioClip;   // 注入音频文件
+            audioSource_AudioEffect.Play();
         } else {
             Debug.LogError("[AudioMAnager.cs/PlayEffect()] audioClip is Null");
         }
@@ -89,12 +90,41 @@ public class AudioManager : MonoBehaviour {
 
     // 播放音效
     public static void PlayEffect(string audioClipName) {
+
         if (!string.IsNullOrEmpty(audioClipName)) {
-            PlayEffect(_Dic[audioClipName]);
+            PlayEffect(dic[audioClipName]);
         } else {
             Debug.LogError("[AudioMAnager.cs/PlayEffect()] audioClipName is Null");
         }
+
     }
 
+    // 改变背景音乐音量
+    public static void ChangeBackgroundVolume(float volume) {
+        print(volume);
+        if (volume < 0 || volume > 1) {
+            Debug.LogError("错误的背景音乐音量");
+            return;
+        }
+        
+        // 改变globalmanager中的音量数值
+        GlobalManager.backgroundAudioVolume = volume;
+        audioSource_BackgroundMusic.volume = GlobalManager.backgroundAudioVolume;
+
+    }
+
+    // 改变音效音量
+    public static void ChangeEffectVolume(float volume) {
+
+        if (volume < 0 || volume > 1) {
+            Debug.LogError("错误的音效音量");
+            return;
+        }
+
+        // 改变globalmanager中的音量数值
+        GlobalManager.effectAudioVolume = volume;
+        audioSource_AudioEffect.volume = GlobalManager.effectAudioVolume;
+        
+    }
 
 }
